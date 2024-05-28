@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Playfair Display", serif;
+            /* overflow-x: hidden;  */
+            /*防止左右滾動*/
+
+        }
+        ul,li{
+            padding: 0;
+            list-style: none;
+        }
+        
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+        .menu_btn{
+            display: none;
+        }
+        h1,ul{
+            margin: 0;
+        }
+        header{
+            height: 100vh;
+            width: 100%;
+            background: url(./img/bg-ring01.jpg)
+            center no-repeat fixed;
+            background-size: cover;
+            position: relative;
+        }
+        .container{
+            width: 100%;
+            display: flex;
+            z-index: 999;
+            align-items: center;
+        }
+        .menu{
+            position: relative;
+            height: 45px;
+            display: flex;
+            z-index: 999;
+            flex: 1;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            width: 100%;
+        }
+        .menu_link{
+            position: relative;
+            display: flex;
+            justify-content: end;
+            height: 100%;
+            text-align: center;
+            flex-basis: calc(100%/4);
+        }
+        .container a{
+            z-index: 4;
+        }
+        .container a>.logo{
+            height: 70px;
+            padding: 10px;
+            /* display: block; */
+
+        }
+        .social_icon,.menu_link{
+            display: flex;
+            font-size: 18px;
+            z-index: 10;
+            letter-spacing: 1.5px;
+            line-height: 45px;
+            transition: 1s;
+
+        }
+        div.menu .social_icon a{
+            color: #183165;
+            margin: 0 10px;
+        }
+        div.menu .social_icon a:hover{
+            color: #c4b19b;
+        }
+        .menu ul.menu_link li a{
+            position: relative;
+            display: block;
+            padding: 0 10px;
+            line-height: 45px;
+            transition: .5s;
+        }
+        .menu ul.menu_link .dropdown_link{
+            margin: 0 auto;
+        }
+        .menu ul.menu_link .dropdown_link .dropdown{
+            background-color: #c4b19b;
+            transform: scaleY(0);
+            /* z-index: -1; */
+            transition: all .3s;
+            transform-origin: 50% 0;
+            cursor: pointer;
+            width: 150%;
+            text-align: left;
+            
+        }
+        .menu ul.menu_link .dropdown_link .dropdown a{
+            color:rgb(24, 49, 101);
+            /* padding: 0; */
+
+        }
+        .menu ul.menu_link .dropdown_link .dropdown a:hover{
+            color:#fff;
+            background-color:#183165;
+            /* padding: 0; */
+
+        }
+        /* **********************************/
+        .menu ul.menu_link .dropdown_link:hover > ul.dropdown{
+            transform: scaleY(1); 
+        }
+       
+    
+       
+        .banner_left{
+            width: 60vw;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
+            clip-path: polygon(0 0 ,100% 0,70% 100%, 0 100%);
+            filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+            position: absolute;
+            /* position: relative; */
+            top: 0;
+            left: 0;
+            transition: 1s;
+        }
+        .banner_left::before{
+            content: 'TWENTY';
+            font-size: clamp(3.5rem,11vw ,12rem);
+            text-shadow: 0 0 10px #fff;
+            font-weight: bold;
+            position: absolute;
+            top: 18%;
+            right: 15%;
+            color: #fff;
+            transition: 1s;
+            animation-name: text-ltr;
+            animation-duration: 2s;
+        }
+        .banner_left>h1{
+            /* background-image: url(./img/bg-ring01.jpg); */
+            background-image: url(./img/bg-ring02.jpg);
+            background-size: cover;
+            background-position:50% 10%;
+            background-repeat: no-repeat;
+            color: transparent;
+            background-clip: text;
+            font-size: clamp(3.5rem,11vw ,12rem);
+            position: absolute;
+            top: 18%;
+            right: 15%;
+            transition: 1s;
+            animation-name: text-ltr;
+            animation-duration: 2s;
+
+        }
+        h1.banner_right{
+            font-size: clamp(3.5rem,11vw ,12rem);
+            /* font-size: 0; */
+            position: absolute;
+           /*  bottom: 20%;
+            right: 16%; */
+            top: 48%;
+            right: 25%;
+            color: #fff;
+            text-shadow: 3px 3px 15px rgb(53, 53, 53);
+            transition: 1s;
+            animation-name: text-rtl;
+            animation-duration: 2s;
+        }
+
+        p.banner_text{
+            font-family: "Playfair Display", serif;
+            font-size: clamp(1rem,12vw,2rem);
+            /* width: 40%; */
+            position: absolute;
+            text-shadow: 1px 2px 8px rgb(26, 25, 25);
+            z-index: 2;
+            color:rgb(24, 49, 101);
+            color:rgb(255, 255, 255);
+            /* top: 40%;
+            left: 15%; */
+            right: 4%;
+            bottom: 3%;
+        }
+
+      /*   button[class^="btn"]{
+            color: rgba(238, 238, 238, 0.4);
+            background-color: rgba(167, 167, 167, 0.4);
+            position: absolute;
+            border: none;
+            font-size: 50px;
+            cursor: pointer;
+        }
+        button.btn-next{
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        button.btn-prev{
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        } */
+
+
+        /* carousel */
+        .carousel{
+            position: relative;
+            width: 100%;
+            /* height: 100%; */
+            /* nav外層需有高度或比例才能讓nav成功定位 */
+            aspect-ratio:2.6/1;
+        
+        }
+        .carousel img{
+            width: 100%;
+            height: auto;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            transition: opacity .5s ease-in-out;
+        }
+        .carousel img.active{
+            /* display: block; */
+            opacity: 1;
+
+        }
+        .carousel_nav a.cs_nav_item{
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #183165;
+            transform: rotate(45deg);
+            margin: 3px;
+        }
+        .carousel_nav{
+            position: absolute;
+            left: 3%;
+            bottom: 3%;
+        }
+        
+
+
+
+
+        @keyframes dropdown_shows {
+            0%{
+                /* transform:  scale(0) translate(0%,0%); */
+                transform:  scale(0);
+                width: 0;
+                height: 0;
+            }
+            25%{
+                /* transform:  scale(0.5) translate(25%,25%); */
+            }
+            50%{
+                /* transform:  scale(1) translate(50%,50%); */
+                /* transform:  scale(0);
+                width: 50%;
+                height: 100%; */
+            }
+            75%{
+                /* transform:  scale(1.5) translate(75%,75%); */
+            }
+            100%{
+                /* transform:  scale(2) translate(100%,100%); */
+                transform:  scale(1);
+                width: 100%;
+                height: 100vh;
+            }
+            }
+            
+        @keyframes text-ltr {
+            0%{
+                opacity: 0;
+                transform: translateX(-130%);
+            }
+            100%{
+                opacity: 1;
+                /* transform: translateX(50%); */
+                transform: translateX(0);
+            }
+        }
+        @keyframes text-ltr2 {
+            0%{
+                opacity: 0;
+                transform: translate(-110%,60%);
+                /* transform: translate(-100%,-60%); */
+            }
+            100%{
+                opacity: 1;
+                transform: translate(10%,60%);
+            }
+        }
+        @keyframes text-rtl {
+            0%{
+                opacity: 0;
+                transform: translateX(200%);
+            }
+            100%{
+                opacity: 1;
+                /* transform: translateX(50%); */
+                transform: translateX(0);
+            }
+        }
+        @keyframes text-rtl2 {
+            0%{
+                opacity: 0;
+                transform: translate(100%,-65%);
+            }
+            100%{
+                opacity: 1;
+                /* transform: translateX(50%); */
+                /* transform: translate(-20%,-65%); */
+                transform: translate(105%,42%);
+
+            }
+        }
+
+        @media screen and (max-width:1600px) {
+            .banner_left{
+                clip-path: polygon(0 0 ,95% 0,75% 100%, 0 100%);
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            .banner_left>h1,.banner_left::before{
+                top: 22%;
+            }
+            .banner_left h1.banner_right{
+                top: 45%;
+                right: 21%;
+            }
+
+        }
+        @media screen and (max-width:1400px) {
+            .banner_left{
+                clip-path: polygon(0 0 ,95% 0,75% 100%, 0 100%);
+            }
+            .banner_left>h1,.banner_left::before{
+                top: 24%;
+            }
+           
+        }
+        @media screen and (max-width:992px) {
+            .banner_left{
+                clip-path: polygon(0 0 ,93% 0,93% 100%, 0 100%);
+            }
+            .banner_left>h1,.banner_left::before{
+                top: 26%;
+            }
+            .banner_left h1.banner_right{
+                top: 45%;
+                right: 15%;
+            }
+            .fa-bars{
+                transition: .5s;
+            }
+            .container .logo{
+                position: absolute;
+                padding: 10px;
+                left: 0;
+                top: 0;
+                filter: brightness(0%) invert(1);
+            } 
+            header nav.container {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+                height: 100vh;
+                /* 寫w100%會有左右滾動條 */
+                width: auto;
+                position: relative;
+                padding: 10px;
+            }
+            header nav.container .menu_btn{
+                position: fixed;
+                right: 0;
+                top: 0;
+                display: block;
+                padding: 25px;
+                font-size: 20px;
+                font-weight: bold;
+                font-family: "Playfair Display", serif;
+                letter-spacing: 3px;
+                color: #fff;
+                z-index: 11;
+                cursor: pointer;
+            } 
+            .menu_bg{
+                position: absolute;
+                background-color: #c4b19b;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 5;
+                height: 0vh;
+                transition: height .5s ; 
+            }
+            .menu_bg_show{
+                height: 100vh;
+            }
+            
+            .menu{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                /* gap: 20px; */
+                justify-content: flex-start;
+                padding: 60px 25px 25px 25px;
+                /* 設置點開後menu裡menu_link的寬度 */
+                width: 200px;
+                position: relative;  
+                z-index: 10;
+                transform: scaleY(0);
+            }
+            .menu_toggle{
+                height: 100%;
+                opacity: 1;
+                transform: scaleY(1);
+                transition: all .5;
+            }
+        
+            .menu_link{
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                order: 1;
+            }
+            .menu_link>li{
+                padding: 10px 0;
+                border-top: 1px solid #8c84a7;
+                width: 100%;
+            }
+            .menu_link>li>a{
+                color:rgb(24, 49, 101);
+                width: 100%;
+                display: block;
+                text-align: left;
+                padding-left: 10px;
+                overflow: hidden;
+            }
+            .menu ul.menu_link li>a::asfter{
+            /* attr(X)將元素的 X 屬性以字串形式傳回。如果該元素沒有 X 屬性，則傳回一個空字串 */
+                /* content: attr(data-menu_item); */
+                content: '';
+                /* padding: 0 10px; */
+                position: absolute;
+                left: 0px;
+                top: 100%;
+                border: yellow;
+                /* color: red; */
+            
+           
+            }
+            .menu_link .dropdown_link:hover,.menu_link li:hover{
+                background-color: #a79684;
+            }
+
+            .dropdown_link{
+                position: relative;
+                transition: all .3s;
+
+            }
+            .menu ul.menu_link .dropdown_link .dropdown{
+                position: absolute;
+                left: 100%;
+                top: -1px;
+                /* display: none; */
+                overflow: hidden;
+                border-top: 1px solid #8c84a7;
+                transform-origin: 0 0;
+                transform: scale(0);
+            }
+            
+            
+            .dropdown_item {
+                padding: 10px;
+                background-color: #a79684;
+            }
+            .social_icon{
+                border-top: 1px solid #8c84a7;
+                padding: 10px 0;
+                display: flex;
+                justify-content: flex-start;
+                 order: 2;
+                width: 100%;
+                font-size: 1.5rem;
+            }
+            .social_icon>li{
+                display: inline-block;
+            }
+            .social_icon>li>a>i{
+                color:rgb(24, 49, 101);
+            }
+            .menu_link,.social_icon{
+                opacity: 0;
+                transition: opacity .5s ease-in;     
+            }
+            .menu.menu_toggle .menu_link,.menu.menu_toggle .social_icon{
+                opacity: 1;
+                
+            }
+
+
+
+            
+        }
+
+
+
+        @media screen and (max-width:768px) {
+            .banner_left{
+                clip-path: none;
+                width: 75vw;
+                height: 70vh;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                border-radius: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .banner_left>h1,.banner_left::before,.banner_left h1.banner_right{
+                font-size: 7rem;
+                right: auto;
+            }
+            
+            p.banner_text{
+                font-size: clamp(1rem,12vw,2rem);
+                position: absolute;
+                z-index: 3;
+                color:#fff;
+                font-weight: bold;
+                text-shadow: 0px 0px 6px #fff;
+                color:rgb(24, 49, 101);
+                width: 60%;
+                left: 50%;
+                top: 60%;
+                text-align: center;
+                transform: translateX(-50%);
+                transition: .5s;
+
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <!-- <div class="container"> -->
+                <!-- <p>Life does not have to be perfect to be wonderful.</p> -->
+                <a href=""><img class="logo" src="./img/logo.png"></a>
+                <div class="menu ">
+                    <ul class="social_icon">
+                        <li>
+                            <a href=""><i class="fa-brands fa-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href=""><i class="fa-brands fa-instagram"></i></a>
+                        </li>
+                        <li>
+                            <a href=""><i class="fa-brands fa-line"></i></a>
+                        </li>
+                        <li>
+                            <a href=""><i class="fa-brands fa-twitter"></i></a>
+                        </li>
+                    </ul>
+                    <ul class="menu_link">
+                        <li ><a href="" data-menu_item="HOME">HOME</a></li>
+                        <li class="dropdown_link">
+                            <a href="" data-menu_item="PRODUCT">PRODUCT</a>
+                            <ul class="dropdown">
+                                <li class="dropdown_item"><a href="">耳環 Earring</a></li>
+                                <li class="dropdown_item"><a href="">耳夾 Earclip</a></li>
+                                <li class="dropdown_item"><a href="">戒指 Rings</a></li>
+                                <li class="dropdown_item"><a href="">項鍊 Necklaces</a></li>
+                                <li class="dropdown_item"><a href="">手鍊 Bracelets</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="" data-menu_item="CONTACT">CONTACT</a></li>
+                        <li><a href="" data-menu_item="LOGIN">LOGIN</a></li>
+                    </ul>
+                </div>
+                <div class="menu_btn">
+                    <span>MENU </span>
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+                <div class="menu_bg "></div>
+            <!-- </div>  -->
+            <!-- <div class="menu_bg_show"></div> -->
+        </nav>
+        <div class="banner_outer">
+
+            <div class="banner_left">
+                <h1>TWENTY</h1>
+                <h1 class="banner_right">EIGHT</h1>
+            </div>
+            
+            <p class="banner_text">Life does not have to be perfect to be wonderful.</p>
+        </div>
+    </header>
+    <div class="carousel">
+        <img id="csItem" src="./img/banner/banner01.webp" alt="" class="carousel_item">
+        <img src="./img/banner/banner02.webp" alt="" class="carousel_item">
+        <img src="./img/banner/banner03.webp" alt="" class="carousel_item">
+        <!-- <button class="btn-next"><i class="fa-solid fa-angle-right"></i></button>
+        <button class="btn-prev"><i class="fa-solid fa-angle-left"></i></button> -->
+        <div class="carousel_nav">
+            <a class="cs_nav_item" href="javascript:;"></a>
+            <a class="cs_nav_item" href="javascript:;"></a>
+            <a class="cs_nav_item" href="javascript:;"></a>
+        </div>
+    </div>
+
+
+
+
+
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br>
+    <script>
+        // document.addEventListener("DOMContentLoaded", function () {
+            // })
+            let menuBtn = document.querySelector(".menu_btn");
+            let toggleBtn = document.querySelector(".fa-bars");
+            let menuBg = document.querySelector(".menu_bg");
+            let menu = document.querySelector(".menu");
+            let logo = document.querySelector(".logo")
+            let dropdownLink = document.querySelector(".dropdown_link")
+            let dropdown = document.querySelector(".dropdown")
+            menuBtn.addEventListener('click',()=>{
+                toggleBtn.classList.toggle('fa-x')
+                menu.classList.toggle('menu_toggle')
+                menuBg.classList.toggle('menu_bg_show')
+            })
+            // product點選後
+            dropdownLink.addEventListener('click',(event)=>{
+                event.stopPropagation();
+                dropdownLink.classList.toggle('dropdown_link_bg')
+                dropdown.classList.toggle('dropdown_active')
+
+            })
+
+            // let carouselArr = ["./img/banner/banner01.webp","./img/banner/banner02.webp","./img/banner/banner03.webp"]
+            let carouselItems = document.querySelectorAll(".carousel_item")
+            let allNavItem = document.querySelectorAll('.cs_nav_item')
+    
+            // 默認顯示圖片索引
+            let index = 0;
+            // 默認顯示nav顏色
+            allNavItem[index].style.backgroundColor = 'red';
+            // 默認顯示圖片
+            carouselItems[index].classList.add('active')
+
+            // 設置輪播圖nav
+            for(let i = 0 ; i < allNavItem.length ; i++){
+                // 獲取每個item的索引賦值到index上
+                allNavItem[i].index = i
+                allNavItem[i].onclick = function(){
+                    index = this.index
+                    setNav();
+                    showCSImage();
+                clearTimeout(autoCarouselTimeout);
+                autoCarouselTimeout = setTimeout(autoCarousel, 3000);
+                    console.log('index被點選')
+                }
+            }
+            //設置輪播圖顯示的方法
+            function showCSImage(){
+                for(let i = 0 ; i< carouselItems.length ; i++){
+                    carouselItems[i].classList.remove('active')
+                }
+                carouselItems[index].classList.add('active')
+            }
+
+            //設置輪播圖nav的顏色方法
+            function setNav(){
+                for(let i = 0 ;i < allNavItem.length ;i++){
+                    allNavItem[i].style.backgroundColor = '';
+                }
+                allNavItem[index].style.backgroundColor = "red";
+            }
+            //設置自動播放輪播圖方法
+            let autoCarouselTimeout ;
+            function autoCarousel(){
+                //關閉之前的計時器
+                clearTimeout(autoCarouselTimeout);
+                index++
+                if(index >= carouselItems.length ){
+                    index = 0
+                }
+                setNav();
+                showCSImage();
+                autoCarouselTimeout = setTimeout(autoCarousel,3000)
+            }
+            // showCSImage();
+            // setNav();
+            setTimeout(autoCarousel,3000)
+         
+
+
+
+
+
+            // let index = 0
+            // prevBtn.addEventListener('click',()=>{
+            //     index--;
+            //     if(index < 0 ){
+            //         index = carouselArr.length-1
+            //     }
+            //     carouselItem.src = carouselArr[index]
+            //     console.log('prevBtn',carouselArr[index])
+                
+                
+            // })
+            // nextBtn.addEventListener('click',()=>{
+            //     index++;
+            //     if(index>carouselArr.length-1){
+            //         index = 0
+            //     }
+            //     carouselItem.src = carouselArr[index]
+            //     console.log('nextBtn',carouselArr[index])
+
+            // })
+
+    </script>
+</body>
+</html>
